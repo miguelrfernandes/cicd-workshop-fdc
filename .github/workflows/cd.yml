@@ -44,6 +44,7 @@ jobs:
       # Build the docker image and push top artifact registry.
       - name: Build and Push Docker Image 🐳
         run: |
+          flutter build web --release
           gcloud auth configure-docker --quiet
           gcloud auth configure-docker europe-west3-docker.pkg.dev --quiet
           docker build -t europe-west3-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REGISTRY }}/flutter_app:v$VERSION .
