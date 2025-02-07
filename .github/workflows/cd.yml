@@ -43,7 +43,7 @@ jobs:
 
       - name: Deploy to Cloud Run 🚀
         env:
-          GOOGLE_CLOUD_RUN_SERVICE: "flutter-app"
+          GOOGLE_CLOUD_RUN_SERVICE: "cicd-19"
         run: |
           gcloud run deploy {GOOGLE_CLOUD_RUN_SERVICE} \
             --image europe-west3-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REGISTRY }}/flutter_app:v$VERSION \
