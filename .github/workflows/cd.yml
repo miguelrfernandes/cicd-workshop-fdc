@@ -46,13 +46,13 @@ jobs:
         run: |
           gcloud auth configure-docker --quiet
           gcloud auth configure-docker europe-west3-docker.pkg.dev --quiet
-          docker build -t europe-west3-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REGISTRY }}/{FLUTTER_APP_NAME}:v$VERSION .
-          docker push europe-west3-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REGISTRY }}/{FLUTTER_APP_NAME}:v$VERSION
+          docker build -t europe-west3-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REGISTRY }}/flutter_app:v$VERSION .
+          docker push europe-west3-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REGISTRY }}/flutter_app:v$VERSION
 
       - name: CD ⚙️
         run: |
           gcloud run deploy {GOOGLE_CLOUD_RUN_SERVICE} \
-            --image europe-west3-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REGISTRY }}/{FLUTTER_APP_NAME}:v$VERSION \
+            --image europe-west3-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REGISTRY }}/flutter_app:v$VERSION \
             --region us-central
           # gcloud run deploy {GOOGLE_CLOUD_RUN_SERVICE} \
           #   --image {IMAGE_TAG} \
