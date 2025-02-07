@@ -14,12 +14,6 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
 
-      - name: Format, Lint and Test
-        run: |
-          dart format --output=none --set-exit-if-changed .
-          flutter analyze
-          flutter test
-
       # Authenticates in GCP with the provided user credentials.
       # Provides secure, temporary credentials for GCP.
       # Supports authentication using Service Account Key JSONs (less secure, legacy method).
@@ -32,12 +26,30 @@ jobs:
       - name: Configure GCP Project
         run: gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
 
+      # Popular community-maintained action used to set up Flutter in GitHub workflows.
+      # Installs Flutter and allows you to run commands like flutter build, flutter test, and flutter analyze within your CI/CD pipeline.
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+
+      - name: Format, Lint and Test
+        run: |
+          dart format --output=none --set-exit-if-changed .
+          flutter analyze
+          flutter test
+
       # Configure Docker authentication for interacting with Artifact Registry, allowing you to push or pull Docker images securely.
       # Build the docker image and push top artifact registry.
       - name: Build and Push Docker Image 🐳
         run: |
           gcloud auth configure-docker --quiet
           gcloud auth configure-docker europe-west3-docker.pkg.dev --quiet
+          docker build -t europe-west3-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REGISTRY }}/{FLUTTER_APP_NAME}:v$VERSION .
+          docker push europe-west3-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REGISTRY }}/{FLUTTER_APP_NAME}:v$VERSION
 
       - name: This will be your CD ⚙️
-        run: echo "This will be your CD ⚙️"
+        run: |
+          gcloud run deploy {GOOGLE_CLOUD_RUN_SERVICE} \
+            --image {IMAGE_TAG} \
+            --region us-central
