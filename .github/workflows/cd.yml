@@ -39,12 +39,12 @@ jobs:
           flutter build web --release
           gcloud auth configure-docker --quiet
           gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
-          docker build -t us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REGISTRY }}/cicd19:v1 .
-          docker push us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REGISTRY }}/cicd19:v1 /
+          docker build -t us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REGISTRY }}/cicd-19:v1 .
+          docker push us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REGISTRY }}/cicd-19:v1
 
       - name: Deploy to Cloud Run 🚀
         run: |
-          gcloud run deploy cicd19 \
+          gcloud run deploy cicd-19 \
             --image us-central1-docker.pkg.dev /axial-life-448911-s2/cicd-workshop-fdc /flutter_app:v1 \
             --region us-central1
           # gcloud run deploy cicd-19 \
