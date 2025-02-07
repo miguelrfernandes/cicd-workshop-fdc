@@ -14,6 +14,12 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
 
+      - name: Format, Lint and Test
+        run: |
+          dart format --output=none --set-exit-if-changed .
+          flutter analyze
+          flutter test
+
       # Authenticates in GCP with the provided user credentials.
       # Provides secure, temporary credentials for GCP.
       # Supports authentication using Service Account Key JSONs (less secure, legacy method).
