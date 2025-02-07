@@ -39,7 +39,7 @@ jobs:
           flutter build web --release
           gcloud auth configure-docker --quiet
           gcloud auth configure-docker europe-west3-docker.pkg.dev --quiet
-          docker build -t europe-west3-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REGISTRY }}/cicd-19:v$1 .
+          docker build -t europe-west3-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REGISTRY }}/cicd-19:v1 .
           docker push europe-west3-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REGISTRY }}/cicd-19:v1
 
       - name: Deploy to Cloud Run 🚀
