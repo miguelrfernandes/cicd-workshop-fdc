@@ -9,6 +9,7 @@ on:
 
 jobs:
   build-lint-test-deploy:
+    name: Build, Lint, Test and Deploy 🚀
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code 📚
