@@ -45,8 +45,5 @@ jobs:
       - name: Deploy to Cloud Run 🚀
         run: |
           gcloud run deploy cicd-19 \
-            --image us-central1-docker.pkg.dev /axial-life-448911-s2/cicd-workshop-fdc /flutter_app:v1 \
+            --image us-central1-docker.pkg.dev /axial-life-448911-s2/cicd-workshop-fdc /cicd-19:v1 \
             --region us-central1
-          # gcloud run deploy cicd-19 \
-          #   --image {IMAGE_TAG} \
-          #   --region us-central
